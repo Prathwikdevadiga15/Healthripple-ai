@@ -1,0 +1,48 @@
+version: "3.9"
+
+# NOTE: the prototype backend (backend/app/data_loader.py) reads the
+# synthetic CSVs directly and does NOT require Postgres to run — this
+# compose file is provided for the real-deployment path described in
+# README.md, and to make `database/schema.sql` runnable if you want to
+# try loading the synthetic data into an actual Postgres instance.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: healthripple
+      POSTGRES_PASSWORD: healthripple
+      POSTGRES_DB: healthripple
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      DATABASE_URL: postgresql://healthripple:healthripple@postgres:5432/healthripple
+      CORS_ORIGINS: http://localhost:5173
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      GROQ_MODEL: ${GROQ_MODEL:-llama-3.3-70b-versatile}
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+
+  web:
+    build:
+      context: ./apps/web
+    environment:
+      VITE_API_URL: /api
+      API_PROXY_TARGET: http://backend:8000
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:

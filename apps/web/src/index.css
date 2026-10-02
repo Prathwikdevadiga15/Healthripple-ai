@@ -1,0 +1,189 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body { font-family: 'Inter', sans-serif; background: #FAFBFD; color: #0a1628; }
+  h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', 'Inter', sans-serif; }
+  :focus-visible { outline: 2px solid #0d9488; outline-offset: 2px; border-radius: 4px; }
+  ::selection { background: rgba(13, 148, 136, 0.15); color: #0a1628; }
+}
+
+@layer components {
+  /* Premium Card */
+  .card-premium {
+    @apply bg-white rounded-2xl border border-slate-100;
+    box-shadow: 0 1px 3px rgba(10, 22, 40, 0.04), 0 8px 32px rgba(10, 22, 40, 0.06);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .card-premium:hover {
+    box-shadow: 0 4px 12px rgba(10, 22, 40, 0.06), 0 16px 48px rgba(10, 22, 40, 0.10);
+    transform: translateY(-2px);
+  }
+
+  /* Glass Card */
+  .card-glass {
+    @apply rounded-2xl border border-white/20;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  /* Button System */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 font-semibold text-sm text-white transition-all duration-300;
+    background: linear-gradient(135deg, #0f4c75, #0d9488);
+    box-shadow: 0 4px 16px rgba(13, 148, 136, 0.25);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 6px 24px rgba(13, 148, 136, 0.35);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 font-semibold text-sm transition-all duration-300;
+    @apply bg-white text-navy-900 border border-slate-200;
+  }
+  .btn-secondary:hover {
+    @apply border-teal-300 text-teal-700;
+    box-shadow: 0 4px 16px rgba(13, 148, 136, 0.12);
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-2.5 font-medium text-sm transition-all duration-200;
+    @apply text-slate-600 hover:bg-slate-50 hover:text-navy-900;
+  }
+
+  /* Badge System */
+  .badge { @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold; }
+  .badge-normal { @apply badge bg-emerald-50 text-emerald-700; }
+  .badge-watch { @apply badge bg-amber-50 text-amber-700; }
+  .badge-elevated { @apply badge bg-orange-50 text-orange-700; }
+  .badge-critical { @apply badge bg-red-50 text-red-700; }
+  .badge-info { @apply badge bg-blue-50 text-blue-700; }
+
+  /* Agent Card Accent Border */
+  .agent-border-pulse { position: relative; overflow: hidden; }
+  .agent-border-pulse::before {
+    content: "";
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, #0f4c75, #0d9488, #14b8a6);
+    border-radius: 18px 18px 0 0;
+  }
+
+  /* Skeleton Loader */
+  .skeleton {
+    @apply animate-pulse rounded-xl;
+    background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+
+  /* Scrollbar */
+  .scrollbar-thin::-webkit-scrollbar { width: 5px; height: 5px; }
+  .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+  .scrollbar-thin::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+  /* Section Header */
+  .section-eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase;
+    color: #0d9488;
+  }
+  .section-eyebrow::before {
+    content: "";
+    @apply inline-block w-2 h-2 rounded-full;
+    background: #0d9488;
+    box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.12);
+  }
+
+  /* Nav Item for sidebar */
+  .nav-item {
+    @apply relative flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200;
+    color: rgba(148, 163, 184, 0.9);
+    min-height: 42px;
+  }
+  .nav-item:hover { background: rgba(255, 255, 255, 0.06); color: #fff; }
+  .nav-item-active {
+    background: rgba(13, 148, 136, 0.12);
+    color: #2dd4bf;
+    border: 1px solid rgba(13, 148, 136, 0.2);
+  }
+  .nav-item-active::before {
+    content: "";
+    position: absolute; left: -1px; top: 10px; bottom: 10px;
+    width: 2px; border-radius: 2px;
+    background: #14b8a6;
+  }
+
+  /* Input */
+  .input-premium {
+    @apply w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-navy-900 transition-all duration-200;
+    @apply focus:outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-100;
+  }
+
+  /* Disclaimer */
+  .disclaimer-banner {
+    @apply text-xs text-center py-2.5 px-4 font-medium;
+    background: linear-gradient(90deg, #fef3c7, #fffbeb, #fef3c7);
+    color: #92400e;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, #0f4c75, #0d9488);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .bg-mesh {
+    background:
+      radial-gradient(at 20% 20%, rgba(13, 148, 136, 0.06) 0%, transparent 50%),
+      radial-gradient(at 80% 80%, rgba(15, 76, 117, 0.06) 0%, transparent 50%),
+      radial-gradient(at 50% 50%, rgba(99, 102, 241, 0.03) 0%, transparent 50%);
+  }
+}
+
+/* Smooth page transitions */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Keyframes */
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes waveform {
+  0%, 100% { height: 12px; }
+  25% { height: 28px; }
+  50% { height: 20px; }
+  75% { height: 32px; }
+}
+
+/* Agent trace step animation */
+@keyframes traceStep {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.trace-step { animation: traceStep 0.4s ease-out forwards; }

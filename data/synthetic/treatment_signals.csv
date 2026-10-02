@@ -1,0 +1,261 @@
+patient_id,medicine_id,medicine_name,prescription_day,expected_refill_day,actual_refill_day,symptom_score,symptom_trend,treatment_change_logged
+P0001,MED-20,Cough Syrup,25,55,57,4,stable,False
+P0002,MED-14,Vitamin A,12,42,44,3,stable,False
+P0003,MED-05,Metformin,16,46,44,4,stable,False
+P0004,MED-15,Tetanus Toxoid,15,45,44,3,stable,False
+P0005,MED-13,Azithromycin,17,47,50,2,improving,False
+P0006,MED-20,Cough Syrup,15,45,45,2,improving,False
+P0007,MED-08,Oxytocin,11,41,39,4,stable,False
+P0008,MED-18,Normal Saline (IV),0,60,62,4,stable,False
+P0009,MED-19,Rabies Vaccine,18,48,51,1,improving,False
+P0010,MED-07,Salbutamol Inhaler,14,44,46,1,improving,False
+P0011,MED-11,Diazepam,1,31,33,2,improving,False
+P0012,MED-11,Diazepam,5,35,38,5,stable,False
+P0013,MED-03,Paracetamol,0,60,62,3,stable,False
+P0014,MED-05,Metformin,9,39,40,3,improving,False
+P0015,MED-07,Salbutamol Inhaler,9,39,39,2,improving,False
+P0016,MED-14,Vitamin A,1,61,76,4,stable,True
+P0017,MED-02,Amoxicillin,0,60,59,1,improving,False
+P0018,MED-04,ORS,0,60,62,5,stable,False
+P0019,MED-16,Adrenaline,5,35,36,4,stable,False
+P0020,MED-13,Azithromycin,7,37,50,8,worsening,False
+P0021,MED-08,Oxytocin,1,61,60,5,stable,False
+P0022,MED-18,Normal Saline (IV),22,52,61,9,worsening,True
+P0023,MED-07,Salbutamol Inhaler,22,52,52,3,stable,False
+P0024,MED-10,Iron-Folic Acid,21,51,49,2,improving,False
+P0025,MED-06,Amlodipine,27,55,55,3,improving,False
+P0026,MED-02,Amoxicillin,0,30,29,3,stable,False
+P0027,MED-02,Amoxicillin,5,35,35,1,improving,False
+P0028,MED-17,Hydrocortisone,12,42,52,9,worsening,False
+P0029,MED-09,Ceftriaxone,24,54,67,3,stable,True
+P0030,MED-08,Oxytocin,14,42,42,2,improving,False
+P0031,MED-06,Amlodipine,21,51,49,5,stable,False
+P0032,MED-10,Iron-Folic Acid,0,60,63,3,improving,False
+P0033,MED-16,Adrenaline,1,31,39,5,stable,False
+P0034,MED-20,Cough Syrup,13,41,44,3,stable,False
+P0035,MED-18,Normal Saline (IV),10,40,38,5,stable,False
+P0036,MED-19,Rabies Vaccine,2,30,36,9,worsening,False
+P0037,MED-16,Adrenaline,4,34,44,5,stable,False
+P0038,MED-16,Adrenaline,1,61,62,4,stable,False
+P0039,MED-17,Hydrocortisone,3,31,30,3,stable,False
+P0040,MED-15,Tetanus Toxoid,12,40,40,1,improving,False
+P0041,MED-08,Oxytocin,0,60,58,3,stable,False
+P0042,MED-15,Tetanus Toxoid,3,33,31,3,stable,False
+P0043,MED-12,ORS-Zinc Kit,0,28,41,9,worsening,False
+P0044,MED-15,Tetanus Toxoid,0,60,68,9,worsening,False
+P0045,MED-07,Salbutamol Inhaler,0,30,44,6,worsening,False
+P0046,MED-02,Amoxicillin,8,38,36,1,improving,False
+P0047,MED-10,Iron-Folic Acid,19,49,52,3,improving,False
+P0048,MED-03,Paracetamol,16,46,58,4,stable,False
+P0049,MED-03,Paracetamol,6,34,36,3,stable,False
+P0050,MED-10,Iron-Folic Acid,4,34,33,2,improving,False
+P0051,MED-14,Vitamin A,13,43,45,4,stable,False
+P0052,MED-09,Ceftriaxone,1,61,62,1,improving,False
+P0053,MED-07,Salbutamol Inhaler,0,60,62,3,improving,False
+P0054,MED-17,Hydrocortisone,1,61,59,3,improving,False
+P0055,MED-04,ORS,14,44,59,6,worsening,False
+P0056,MED-12,ORS-Zinc Kit,19,49,49,3,stable,False
+P0057,MED-05,Metformin,5,35,36,3,stable,False
+P0058,MED-02,Amoxicillin,26,54,69,6,worsening,True
+P0059,MED-19,Rabies Vaccine,20,50,50,3,improving,False
+P0060,MED-17,Hydrocortisone,22,52,51,1,improving,False
+P0061,MED-16,Adrenaline,24,54,52,3,improving,False
+P0062,MED-17,Hydrocortisone,10,40,51,3,stable,False
+P0063,MED-01,Insulin,10,40,52,6,worsening,False
+P0064,MED-01,Insulin,0,60,75,7,worsening,False
+P0065,MED-10,Iron-Folic Acid,20,48,49,3,improving,False
+P0066,MED-19,Rabies Vaccine,6,36,34,4,stable,False
+P0067,MED-10,Iron-Folic Acid,1,61,61,2,improving,False
+P0068,MED-20,Cough Syrup,24,54,70,6,worsening,False
+P0069,MED-06,Amlodipine,6,34,35,1,improving,False
+P0070,MED-02,Amoxicillin,1,61,60,1,improving,False
+P0071,MED-20,Cough Syrup,18,48,47,2,improving,False
+P0072,MED-16,Adrenaline,17,45,46,3,stable,False
+P0073,MED-15,Tetanus Toxoid,0,30,29,3,improving,False
+P0074,MED-18,Normal Saline (IV),10,40,48,7,worsening,True
+P0075,MED-06,Amlodipine,1,61,71,7,worsening,False
+P0076,MED-15,Tetanus Toxoid,1,61,64,2,improving,False
+P0077,MED-06,Amlodipine,0,60,59,2,improving,False
+P0078,MED-19,Rabies Vaccine,1,31,30,2,improving,False
+P0079,MED-08,Oxytocin,12,40,42,3,stable,False
+P0080,MED-17,Hydrocortisone,8,38,40,1,improving,False
+P0081,MED-13,Azithromycin,0,60,58,4,stable,False
+P0082,MED-18,Normal Saline (IV),8,38,38,3,improving,False
+P0083,MED-12,ORS-Zinc Kit,4,34,40,9,worsening,False
+P0084,MED-16,Adrenaline,24,54,57,4,stable,False
+P0085,MED-09,Ceftriaxone,0,60,61,3,improving,False
+P0086,MED-14,Vitamin A,22,50,58,6,worsening,False
+P0087,MED-17,Hydrocortisone,7,37,51,8,worsening,False
+P0088,MED-02,Amoxicillin,12,42,53,7,worsening,False
+P0089,MED-05,Metformin,17,47,50,2,improving,False
+P0090,MED-13,Azithromycin,17,45,45,4,stable,False
+P0091,MED-06,Amlodipine,18,48,47,1,improving,False
+P0092,MED-05,Metformin,14,44,44,1,improving,False
+P0093,MED-06,Amlodipine,1,61,75,8,worsening,False
+P0094,MED-14,Vitamin A,8,38,36,1,improving,False
+P0095,MED-05,Metformin,10,38,40,2,improving,False
+P0096,MED-03,Paracetamol,25,55,62,8,worsening,True
+P0097,MED-02,Amoxicillin,23,51,65,8,worsening,False
+P0098,MED-06,Amlodipine,1,29,35,6,worsening,False
+P0099,MED-13,Azithromycin,18,48,48,3,improving,False
+P0100,MED-12,ORS-Zinc Kit,16,44,43,5,stable,False
+P0101,MED-16,Adrenaline,16,44,43,2,improving,False
+P0102,MED-17,Hydrocortisone,7,37,45,9,worsening,True
+P0103,MED-13,Azithromycin,0,60,75,7,worsening,True
+P0104,MED-14,Vitamin A,22,50,51,4,stable,False
+P0105,MED-20,Cough Syrup,23,53,51,3,stable,False
+P0106,MED-20,Cough Syrup,26,54,55,3,improving,False
+P0107,MED-10,Iron-Folic Acid,18,48,50,3,improving,False
+P0108,MED-03,Paracetamol,9,39,54,4,stable,False
+P0109,MED-07,Salbutamol Inhaler,23,53,54,1,improving,False
+P0110,MED-13,Azithromycin,3,33,36,2,improving,False
+P0111,MED-12,ORS-Zinc Kit,25,55,69,6,worsening,True
+P0112,MED-07,Salbutamol Inhaler,20,50,48,5,stable,False
+P0113,MED-03,Paracetamol,1,61,71,8,worsening,False
+P0114,MED-01,Insulin,19,47,49,2,improving,False
+P0115,MED-06,Amlodipine,4,34,32,4,stable,False
+P0116,MED-07,Salbutamol Inhaler,5,35,34,5,stable,False
+P0117,MED-02,Amoxicillin,21,51,58,6,worsening,False
+P0118,MED-07,Salbutamol Inhaler,18,46,56,7,worsening,False
+P0119,MED-04,ORS,17,47,56,7,worsening,False
+P0120,MED-20,Cough Syrup,0,60,62,5,stable,False
+P0121,MED-12,ORS-Zinc Kit,13,43,50,8,worsening,False
+P0122,MED-02,Amoxicillin,21,51,60,9,worsening,True
+P0123,MED-19,Rabies Vaccine,21,51,49,2,improving,False
+P0124,MED-15,Tetanus Toxoid,2,32,33,1,improving,False
+P0125,MED-13,Azithromycin,21,49,49,4,stable,False
+P0126,MED-03,Paracetamol,6,36,39,1,improving,False
+P0127,MED-02,Amoxicillin,19,49,60,3,stable,True
+P0128,MED-17,Hydrocortisone,20,48,47,3,improving,False
+P0129,MED-02,Amoxicillin,21,49,51,2,improving,False
+P0130,MED-01,Insulin,18,48,47,4,stable,False
+P0131,MED-18,Normal Saline (IV),0,60,58,3,improving,False
+P0132,MED-06,Amlodipine,20,48,56,9,worsening,False
+P0133,MED-12,ORS-Zinc Kit,0,28,29,3,improving,False
+P0134,MED-12,ORS-Zinc Kit,4,34,47,6,worsening,False
+P0135,MED-17,Hydrocortisone,5,35,36,2,improving,False
+P0136,MED-09,Ceftriaxone,19,49,50,2,improving,False
+P0137,MED-15,Tetanus Toxoid,0,30,33,5,stable,False
+P0138,MED-05,Metformin,16,46,48,4,stable,False
+P0139,MED-17,Hydrocortisone,14,42,42,5,stable,False
+P0140,MED-20,Cough Syrup,4,34,32,2,improving,False
+P0141,MED-01,Insulin,26,54,56,4,stable,False
+P0142,MED-07,Salbutamol Inhaler,1,61,61,1,improving,False
+P0143,MED-15,Tetanus Toxoid,17,47,46,4,stable,False
+P0144,MED-03,Paracetamol,24,54,55,3,improving,False
+P0145,MED-14,Vitamin A,9,39,39,2,improving,False
+P0146,MED-02,Amoxicillin,0,60,59,5,stable,False
+P0147,MED-14,Vitamin A,1,31,31,1,improving,False
+P0148,MED-19,Rabies Vaccine,19,49,49,5,stable,False
+P0149,MED-19,Rabies Vaccine,15,45,43,3,stable,False
+P0150,MED-04,ORS,11,41,41,3,improving,False
+P0151,MED-18,Normal Saline (IV),0,60,58,3,improving,False
+P0152,MED-04,ORS,20,50,48,2,improving,False
+P0153,MED-08,Oxytocin,15,43,43,3,stable,False
+P0154,MED-14,Vitamin A,18,46,49,3,stable,False
+P0155,MED-19,Rabies Vaccine,0,60,68,9,worsening,True
+P0156,MED-01,Insulin,0,60,59,4,stable,False
+P0157,MED-04,ORS,0,60,62,3,improving,False
+P0158,MED-10,Iron-Folic Acid,5,33,36,5,stable,False
+P0159,MED-17,Hydrocortisone,15,45,59,9,worsening,True
+P0160,MED-15,Tetanus Toxoid,1,61,63,2,improving,False
+P0161,MED-18,Normal Saline (IV),9,37,40,4,stable,False
+P0162,MED-13,Azithromycin,14,44,43,2,improving,False
+P0163,MED-13,Azithromycin,22,52,54,2,improving,False
+P0164,MED-16,Adrenaline,10,40,52,6,worsening,False
+P0165,MED-10,Iron-Folic Acid,17,47,50,5,stable,False
+P0166,MED-11,Diazepam,10,40,46,3,stable,False
+P0167,MED-20,Cough Syrup,3,33,44,6,worsening,False
+P0168,MED-01,Insulin,7,37,48,7,worsening,False
+P0169,MED-04,ORS,21,49,49,2,improving,False
+P0170,MED-04,ORS,3,33,43,8,worsening,False
+P0171,MED-02,Amoxicillin,0,60,67,3,stable,False
+P0172,MED-14,Vitamin A,20,50,53,4,stable,False
+P0173,MED-16,Adrenaline,1,31,42,9,worsening,False
+P0174,MED-03,Paracetamol,21,49,62,9,worsening,False
+P0175,MED-06,Amlodipine,1,61,62,3,stable,False
+P0176,MED-19,Rabies Vaccine,19,49,49,2,improving,False
+P0177,MED-04,ORS,1,61,64,2,improving,False
+P0178,MED-16,Adrenaline,2,30,32,2,improving,False
+P0179,MED-16,Adrenaline,21,51,64,6,worsening,False
+P0180,MED-14,Vitamin A,1,61,63,1,improving,False
+P0181,MED-19,Rabies Vaccine,7,37,50,8,worsening,True
+P0182,MED-14,Vitamin A,23,51,53,3,stable,False
+P0183,MED-08,Oxytocin,9,37,48,6,worsening,False
+P0184,MED-14,Vitamin A,18,48,50,1,improving,False
+P0185,MED-15,Tetanus Toxoid,13,43,49,6,worsening,False
+P0186,MED-20,Cough Syrup,9,39,37,1,improving,False
+P0187,MED-16,Adrenaline,25,55,70,6,worsening,False
+P0188,MED-04,ORS,0,60,61,2,improving,False
+P0189,MED-08,Oxytocin,1,61,68,6,worsening,True
+P0190,MED-19,Rabies Vaccine,0,60,59,1,improving,False
+P0191,MED-13,Azithromycin,26,54,52,4,stable,False
+P0192,MED-18,Normal Saline (IV),6,34,36,3,improving,False
+P0193,MED-09,Ceftriaxone,0,60,68,7,worsening,False
+P0194,MED-03,Paracetamol,19,49,49,3,improving,False
+P0195,MED-10,Iron-Folic Acid,0,28,29,2,improving,False
+P0196,MED-17,Hydrocortisone,0,60,70,6,worsening,False
+P0197,MED-11,Diazepam,8,36,35,1,improving,False
+P0198,MED-06,Amlodipine,1,61,62,2,improving,False
+P0199,MED-20,Cough Syrup,1,61,69,6,worsening,False
+P0200,MED-18,Normal Saline (IV),18,48,49,3,improving,False
+P0201,MED-11,Diazepam,18,48,48,2,improving,False
+P0202,MED-06,Amlodipine,5,35,48,7,worsening,False
+P0203,MED-05,Metformin,8,36,38,2,improving,False
+P0204,MED-13,Azithromycin,7,35,36,5,stable,False
+P0205,MED-06,Amlodipine,9,39,52,7,worsening,False
+P0206,MED-05,Metformin,11,41,56,3,stable,False
+P0207,MED-14,Vitamin A,1,31,40,3,stable,True
+P0208,MED-20,Cough Syrup,3,33,47,5,stable,False
+P0209,MED-03,Paracetamol,24,52,54,1,improving,False
+P0210,MED-03,Paracetamol,1,29,29,4,stable,False
+P0211,MED-14,Vitamin A,7,37,38,3,improving,False
+P0212,MED-20,Cough Syrup,1,61,61,1,improving,False
+P0213,MED-20,Cough Syrup,12,42,41,2,improving,False
+P0214,MED-11,Diazepam,23,53,52,3,improving,False
+P0215,MED-13,Azithromycin,11,41,44,3,stable,False
+P0216,MED-11,Diazepam,18,46,48,4,stable,False
+P0217,MED-01,Insulin,23,53,52,4,stable,False
+P0218,MED-10,Iron-Folic Acid,19,49,64,8,worsening,False
+P0219,MED-14,Vitamin A,7,37,36,4,stable,False
+P0220,MED-16,Adrenaline,4,34,35,3,improving,False
+P0221,MED-13,Azithromycin,1,61,77,6,worsening,False
+P0222,MED-12,ORS-Zinc Kit,16,44,55,3,stable,False
+P0223,MED-15,Tetanus Toxoid,13,43,46,3,improving,False
+P0224,MED-19,Rabies Vaccine,19,49,48,5,stable,False
+P0225,MED-14,Vitamin A,3,31,30,5,stable,False
+P0226,MED-01,Insulin,7,35,35,3,stable,False
+P0227,MED-04,ORS,1,31,32,1,improving,False
+P0228,MED-09,Ceftriaxone,21,51,54,3,stable,False
+P0229,MED-09,Ceftriaxone,25,53,51,2,improving,False
+P0230,MED-16,Adrenaline,1,61,61,3,stable,False
+P0231,MED-04,ORS,25,53,61,6,worsening,True
+P0232,MED-02,Amoxicillin,21,49,60,9,worsening,False
+P0233,MED-02,Amoxicillin,23,51,50,1,improving,False
+P0234,MED-19,Rabies Vaccine,15,45,43,2,improving,False
+P0235,MED-01,Insulin,19,49,51,4,stable,False
+P0236,MED-01,Insulin,20,50,66,7,worsening,False
+P0237,MED-12,ORS-Zinc Kit,0,60,59,5,stable,False
+P0238,MED-14,Vitamin A,9,37,36,3,improving,False
+P0239,MED-10,Iron-Folic Acid,14,44,44,3,stable,False
+P0240,MED-12,ORS-Zinc Kit,5,35,37,5,stable,False
+P0241,MED-04,ORS,1,61,72,4,stable,True
+P0242,MED-01,Insulin,11,41,43,4,stable,False
+P0243,MED-18,Normal Saline (IV),6,36,52,5,stable,False
+P0244,MED-01,Insulin,1,61,60,3,improving,False
+P0245,MED-13,Azithromycin,23,53,55,4,stable,False
+P0246,MED-12,ORS-Zinc Kit,6,36,38,1,improving,False
+P0247,MED-16,Adrenaline,24,54,56,2,improving,False
+P0248,MED-20,Cough Syrup,11,41,44,2,improving,False
+P0249,MED-01,Insulin,11,41,43,1,improving,False
+P0250,MED-16,Adrenaline,7,37,38,2,improving,False
+P0251,MED-10,Iron-Folic Acid,5,35,35,4,stable,False
+P0252,MED-16,Adrenaline,11,41,54,9,worsening,False
+P0253,MED-19,Rabies Vaccine,2,32,34,3,stable,False
+P0254,MED-11,Diazepam,0,60,60,3,improving,False
+P0255,MED-03,Paracetamol,0,30,28,3,improving,False
+P0256,MED-12,ORS-Zinc Kit,1,29,30,5,stable,False
+P0257,MED-20,Cough Syrup,22,52,54,1,improving,False
+P0258,MED-13,Azithromycin,26,54,67,3,stable,False
+P0259,MED-15,Tetanus Toxoid,10,40,43,5,stable,False
+P0260,MED-18,Normal Saline (IV),1,61,63,2,improving,False

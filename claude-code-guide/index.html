@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAREsaathi AI — Intelligent Healthcare Assistance for Everyone</title>
+  <meta name="description" content="A multilingual, voice-first Agentic AI healthcare companion that understands user needs, retrieves trusted health information, coordinates assistance, and applies safety and human-oversight mechanisms." />
+  <meta name="keywords" content="CAREsaathi, Agentic AI, Healthcare, Multilingual, Kannada, Hindi, Tamil, Telugu, LangGraph, RAG, Voice Assistant, FHIR, Medical AI, Safety" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- CURSOR -->
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+
+  <!-- PRELOADER -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-inner">
+      <div class="preloader-logo">
+        <div class="pulse-ring"></div>
+        <div class="pulse-ring delay-1"></div>
+        <div class="pulse-ring delay-2"></div>
+        <svg class="preloader-icon" viewBox="0 0 48 48" fill="none">
+          <path d="M24 6v12M24 30v12M6 24h12M30 24h12" stroke="url(#pl-g)" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="24" cy="24" r="8" stroke="url(#pl-g)" stroke-width="2" fill="none"/>
+          <path d="M21 22l2 2 4-4" stroke="url(#pl-g)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs><linearGradient id="pl-g" x1="6" y1="6" x2="42" y2="42"><stop stop-color="#00d4aa"/><stop offset="1" stop-color="#0ea5e9"/></linearGradient></defs>
+        </svg>
+      </div>
+      <div class="preloader-text"><span>CARE</span><span class="preloader-highlight">saathi</span><span class="preloader-ai">AI</span></div>
+      <div class="preloader-status" id="preloader-status">Initializing Healthcare AI...</div>
+      <div class="preloader-bar"><div class="preloader-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- PARTICLES -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-icon">
+          <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="url(#lg)" stroke-width="2"/><path d="M16 9v6M16 17v6M10 16h4M18 16h4" stroke="url(#lg)" stroke-width="2" stroke-linecap="round"/><defs><linearGradient id="lg" x1="2" y1="2" x2="30" y2="30"><stop stop-color="#00d4aa"/><stop offset="1" stop-color="#0ea5e9"/></linearGradient></defs></svg>
+        </div>
+        <div class="nav-logo-text"><span class="logo-care">CARE</span><span class="logo-saathi">saathi</span><span class="logo-ai-badge">AI</span></div>
+      </a>
+      <div class="nav-links" id="nav-links">
+        <a href="#home" class="nav-link active" data-section="home">Home</a>
+        <a href="#problem" class="nav-link" data-section="problem">Problem</a>
+        <a href="#agents" class="nav-link" data-section="agents">AI Agents</a>
+        <a href="#safety" class="nav-link" data-section="safety">Safety</a>
+        <a href="#demo" class="nav-link" data-section="demo">AI Care Center</a>
+        <a href="#dashboard" class="nav-link" data-section="dashboard">Dashboard</a>
+        <a href="#architecture" class="nav-link" data-section="architecture">Architecture</a>
+        <a href="#tech" class="nav-link" data-section="tech">Tech Stack</a>
+      </div>
+      <div class="nav-actions">
+        <div class="nav-lang-selector">
+          <button class="lang-btn" id="lang-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10A15.3 15.3 0 0112 2z"/></svg>
+            <span id="current-lang">EN</span>
+          </button>
+          <div class="lang-dropdown" id="lang-dropdown">
+            <button class="lang-option active" data-lang="en">🇬🇧 English</button>
+            <button class="lang-option" data-lang="kn">🇮🇳 ಕನ್ನಡ</button>
+            <button class="lang-option" data-lang="hi">🇮🇳 हिन्दी</button>
+            <button class="lang-option" data-lang="ta">🇮🇳 தமிழ்</button>
+            <button class="lang-option" data-lang="te">🇮🇳 తెలుగు</button>
+            <button class="lang-option" data-lang="ml">🇮🇳 മലയാളം</button>
+            <button class="lang-option" data-lang="tu">🇮🇳 ತುಳು *</button>
+          </div>
+        </div>
+        <a href="#demo" class="nav-cta"><span>Talk to CAREsaathi</span></a>
+        <button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu-bg"></div>
+    <div class="mobile-menu-content">
+      <a href="#home" class="mobile-link">Home</a>
+      <a href="#problem" class="mobile-link">Problem</a>
+      <a href="#agents" class="mobile-link">AI Agents</a>
+      <a href="#safety" class="mobile-link">Safety Engine</a>
+      <a href="#demo" class="mobile-link">AI Care Center</a>
+      <a href="#dashboard" class="mobile-link">Dashboard</a>
+      <a href="#map-section" class="mobile-link">Healthcare Map</a>
+      <a href="#architecture" class="mobile-link">Architecture</a>
+      <a href="#tech" class="mobile-link">Tech Stack</a>
+      <a href="#team" class="mobile-link">Team</a>
+      <a href="#demo" class="mobile-cta">Talk to CAREsaathi →</a>
+    </div>
+  </div>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="home">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-glow hero-glow-1"></div>
+    <div class="hero-glow hero-glow-2"></div>
+    <div class="hero-glow hero-glow-3"></div>
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="hero-badge reveal" data-delay="0"><div class="badge-pulse"></div><span>Build for Billions — Healthcare AI Hackathon 2026</span></div>
+        <h1 class="hero-title reveal" data-delay="100">
+          <span class="title-line"><span class="gradient-text">Intelligent Healthcare</span></span>
+          <span class="title-line">Assistance for Everyone.</span>
+        </h1>
+        <p class="hero-description reveal" data-delay="200">Understand your health. Find the right next step. Get assistance when it matters — in <em>Kannada</em>, <em>Hindi</em>, <em>Tamil</em>, <em>Telugu</em>, <em>Malayalam</em>, and <em>English</em>.</p>
+        <div class="hero-pillars reveal" data-delay="250">
+          <span class="pillar">🎙️ Voice First</span>
+          <span class="pillar">🌐 Multilingual</span>
+          <span class="pillar">🧠 Agentic AI</span>
+          <span class="pillar">🛡️ Safety First</span>
+          <span class="pillar">👨‍⚕️ Human Oversight</span>
+        </div>
+        <div class="hero-buttons reveal" data-delay="300">
+          <a href="#demo" class="btn-primary"><span>🤖 Talk to CAREsaathi</span><div class="btn-shimmer"></div></a>
+          <a href="#architecture" class="btn-outline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>Explore Healthcare AI</span></a>
+        </div>
+        <div class="hero-stats reveal" data-delay="400">
+          <div class="hero-stat"><span class="stat-value" data-count="3">0</span><span class="stat-label">Healthcare Agents</span></div>
+          <div class="stat-divider"></div>
+          <div class="hero-stat"><span class="stat-value" data-count="7">0</span><span class="stat-label">Languages</span></div>
+          <div class="stat-divider"></div>
+          <div class="hero-stat"><span class="stat-value" data-count="19">0</span><span class="stat-label">Tech Layers</span></div>
+          <div class="stat-divider"></div>
+          <div class="hero-stat"><span class="stat-value" data-count="5">0</span><span class="stat-label">Safety Checks</span></div>
+        </div>
+      </div>
+      <div class="hero-right reveal" data-delay="200">
+        <div class="hero-image-wrapper">
+          <div class="hero-image-glow"></div>
+          <img src="assets/caresaathi-hero.jpg" alt="CAREsaathi AI Healthcare Command Center" class="hero-image" />
+          <div class="hero-image-overlay"></div>
+          <div class="floating-card card-1"><div class="fc-icon">🩺</div><div class="fc-text"><span class="fc-title">CARE Agent Active</span><span class="fc-desc">Symptom screening in ಕನ್ನಡ</span></div></div>
+          <div class="floating-card card-2"><div class="fc-icon">💊</div><div class="fc-text"><span class="fc-title">MED Agent</span><span class="fc-desc">Medication reminder set</span></div></div>
+          <div class="floating-card card-3"><div class="fc-icon">🚑</div><div class="fc-text"><span class="fc-title">EMERGENCY Agent</span><span class="fc-desc">Hospital found — 2.3 km</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-indicator reveal" data-delay="600"><div class="scroll-mouse"><div class="scroll-wheel"></div></div><span>Scroll to explore</span></div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip"><div class="marquee-track"><div class="marquee-content">
+    <span>Agentic AI</span><span class="marquee-dot">◆</span><span>CARE Agent</span><span class="marquee-dot">◆</span><span>MED Agent</span><span class="marquee-dot">◆</span><span>EMERGENCY Agent</span><span class="marquee-dot">◆</span><span>RAG Pipeline</span><span class="marquee-dot">◆</span><span>Safety Engine</span><span class="marquee-dot">◆</span><span>Voice Assistant</span><span class="marquee-dot">◆</span><span>Multilingual</span><span class="marquee-dot">◆</span><span>Human Oversight</span><span class="marquee-dot">◆</span><span>FHIR</span><span class="marquee-dot">◆</span>
+    <span>Agentic AI</span><span class="marquee-dot">◆</span><span>CARE Agent</span><span class="marquee-dot">◆</span><span>MED Agent</span><span class="marquee-dot">◆</span><span>EMERGENCY Agent</span><span class="marquee-dot">◆</span><span>RAG Pipeline</span><span class="marquee-dot">◆</span><span>Safety Engine</span><span class="marquee-dot">◆</span><span>Voice Assistant</span><span class="marquee-dot">◆</span><span>Multilingual</span><span class="marquee-dot">◆</span><span>Human Oversight</span><span class="marquee-dot">◆</span><span>FHIR</span><span class="marquee-dot">◆</span>
+  </div></div></div>
+
+  <!-- ============ PROBLEM ============ -->
+  <section class="section" id="problem">
+    <div class="container">
+      <div class="section-eyebrow reveal"><span class="eyebrow-line"></span><span class="eyebrow-text">The Challenge</span></div>
+      <h2 class="section-heading reveal" data-delay="100">Healthcare in India:<br /><span class="gradient-text">Three Critical Gaps</span></h2>
+      <p class="section-subheading reveal" data-delay="200">Millions lack health awareness, continuous care support, and emergency access — especially where language barriers, limited connectivity, and scarcity of professionals create life-threatening delays.</p>
+      <div class="problem-grid">
+        <div class="problem-card reveal" data-delay="100">
+          <div class="problem-number">01</div>
+          <div class="problem-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <h3>Lack of Early Awareness</h3>
+          <p>People ignore symptoms due to lack of accessible health information in their native language. Preventable diseases escalate to critical stages.</p>
+          <div class="problem-stat"><span class="problem-stat-value">67%</span><span class="problem-stat-desc">of rural patients delay seeking care</span></div>
+        </div>
+        <div class="problem-card reveal" data-delay="200">
+          <div class="problem-number">02</div>
+          <div class="problem-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+          <h3>Fragmented Care Support</h3>
+          <p>Medication reminders, follow-up care, and health education are disconnected. Patients forget prescriptions. Caregivers are overwhelmed.</p>
+          <div class="problem-stat"><span class="problem-stat-value">50%</span><span class="problem-stat-desc">of patients miss follow-up medications</span></div>
+        </div>
+        <div class="problem-card reveal" data-delay="300">
+          <div class="problem-number">03</div>
+          <div class="problem-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+          <h3>Emergency Access Gap</h3>
+          <p>In emergencies, people don't know the nearest facility, available ambulances, or what first aid to provide. Precious minutes are lost.</p>
+          <div class="problem-stat"><span class="problem-stat-value">45 min</span><span class="problem-stat-desc">avg emergency response in rural areas</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3 HEALTHCARE AGENTS ============ -->
+  <section class="section section-dark" id="agents">
+    <div class="container">
+      <div class="section-eyebrow reveal"><span class="eyebrow-line"></span><span class="eyebrow-text">Healthcare AI Agents</span></div>
+      <h2 class="section-heading reveal" data-delay="100">Three Specialized<br /><span class="gradient-text">Healthcare Agents</span></h2>
+      <p class="section-subheading reveal" data-delay="200">Not "User asks → AI answers." CAREsaathi <strong>understands → plans → retrieves → assesses → acts → verifies → explains</strong>. That is what makes it truly agentic.</p>
+
+      <div class="agents-grid">
+        <!-- CARE AGENT -->
+        <div class="agent-card care-agent reveal" data-delay="100">
+          <div class="agent-icon-wrap care-icon"><span>🩺</span></div>
+          <h3>CARE Agent</h3>
+          <p class="agent-subtitle">Everyday Health Assistance</p>
+          <ul class="agent-features">
+            <li>Symptom guidance & screening</li>
+            <li>Health-risk assessment</li>
+            <li>Basic health education</li>
+            <li>Follow-up questions</li>
+            <li>Personalized next-step suggestions</li>
+          </ul>
+          <div class="agent-demo-card">
+            <div class="agent-demo-label">Example Interaction</div>
+            <div class="demo-msg user-demo">"ನನಗೆ ಜ್ವರ ಮತ್ತು ಕೆಮ್ಮು ಇದೆ"</div>
+            <div class="demo-msg ai-demo">
+              <div class="ai-steps">
+                <span class="ai-step done">✓ Intent Detection</span>
+                <span class="ai-step done">✓ Risk Assessment</span>
+                <span class="ai-step done">✓ Knowledge Retrieval</span>
+                <span class="ai-step done">✓ Safety Validation</span>
+                <span class="ai-step active">→ Generating Response</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MED AGENT -->
+        <div class="agent-card med-agent reveal" data-delay="200">
+          <div class="agent-icon-wrap med-icon"><span>💊</span></div>
+          <h3>MED Agent</h3>
+          <p class="agent-subtitle">Medication & Treatment Support</p>
+          <ul class="agent-features">
+            <li>Medication reminders & schedule</li>
+            <li>Prescription info extraction</li>
+            <li>Drug-interaction warnings</li>
+            <li>Treatment adherence tracking</li>
+            <li>Dosage information</li>
+          </ul>
+          <div class="agent-demo-card">
+            <div class="agent-demo-label">Medication Tracker</div>
+            <div class="med-tracker">
+              <div class="med-item"><span class="med-time-badge">🔔 8 AM</span><span>Metformin 500mg</span><span class="med-status taken">✓ Taken</span></div>
+              <div class="med-item"><span class="med-time-badge upcoming-badge">🕐 2 PM</span><span>Atorvastatin 10mg</span><span class="med-status pending">Upcoming</span></div>
+              <div class="med-item"><span class="med-time-badge upcoming-badge">🕐 8 PM</span><span>Amlodipine 5mg</span><span class="med-status pending">Upcoming</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EMERGENCY AGENT -->
+        <div class="agent-card emergency-agent reveal" data-delay="300">
+          <div class="agent-icon-wrap emergency-icon"><span>🚑</span></div>
+          <h3>EMERGENCY Agent</h3>
+          <p class="agent-subtitle">Urgent Situation Response</p>
+          <ul class="agent-features">
+            <li>Emergency keyword detection</li>
+            <li>Emergency guidance</li>
+            <li>Nearby facility discovery</li>
+            <li>Emergency contact workflow</li>
+            <li>Human/caregiver escalation</li>
+          </ul>
+          <div class="agent-demo-card emergency-demo">
+            <div class="agent-demo-label">⚠️ Emergency Detection</div>
+            <div class="emergency-sim">
+              <div class="emergency-pulse-dot"></div>
+              <p class="emergency-input">"Chest pain and difficulty breathing"</p>
+              <div class="emergency-indicators">
+                <span class="indicator critical">🔴 Chest Pain</span>
+                <span class="indicator critical">🔴 Breathing Difficulty</span>
+              </div>
+              <p class="emergency-action">→ Immediate professional help recommended</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agentic Flow -->
+      <div class="agentic-flow-section reveal" data-delay="200">
+        <h3 class="agentic-title">The <span class="gradient-text">Agentic Flow</span> — What Judges Will See</h3>
+        <div class="agentic-pipeline">
+          <div class="pipe-step"><div class="pipe-icon">💬</div><span>Understand</span></div>
+          <div class="pipe-arrow">→</div>
+          <div class="pipe-step"><div class="pipe-icon">📋</div><span>Plan</span></div>
+          <div class="pipe-arrow">→</div>
+          <div class="pipe-step"><div class="pipe-icon">📚</div><span>Retrieve</span></div>
+          <div class="pipe-arrow">→</div>
+          <div class="pipe-step"><div class="pipe-icon">📊</div><span>Assess</span></div>
+          <div class="pipe-arrow">→</div>
+          <div class="pipe-step"><div class="pipe-icon">⚡</div><span>Act</span></div>
+          <div class="pipe-arrow">→</div>
+          <div class="pipe-step"><div class="pipe-icon">🛡️</div><span>Verify</span></div>
+          <div class="pipe-arrow">→</div>
+          <div class="pipe-step"><div class="pipe-icon">✅</div><span>Explain</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SAFETY ENGINE + HUMAN OVERSIGHT ============ -->
+  <section class="section" id="safety">
+    <div class="container">
+      <div class="section-eyebrow reveal"><span class="eyebrow-line"></span><span class="eyebrow-text">Differentiator</span></div>
+      <h2 class="section-heading reveal" data-delay="100">Health Safety Engine<br /><span class="gradient-text">& Human Oversight</span></h2>
+
+      <div class="safety-grid">
+        <!-- Safety Engine -->
+        <div class="safety-card reveal" data-delay="100">
+          <div class="safety-visual">
+            <img src="assets/safety-engine.jpg" alt="Health Safety Engine Visualization" />
+          </div>
+          <h3>🛡️ Health Safety Engine</h3>
+          <div class="safety-pipeline">
+            <div class="safety-step"><span class="s-num">1</span>Medical Intent Detection</div>
+            <div class="safety-step"><span class="s-num">2</span>Risk Classification</div>
+            <div class="safety-step"><span class="s-num">3</span>Danger-Sign Detection</div>
+            <div class="safety-step"><span class="s-num">4</span>Knowledge Verification</div>
+            <div class="safety-step"><span class="s-num">5</span>Response Safety Check</div>
+            <div class="safety-step"><span class="s-num">6</span>Human Escalation</div>
+          </div>
+          <div class="safety-levels">
+            <div class="safety-level green"><span class="level-dot green-dot"></span><strong>General Information</strong><p>Provide educational information</p></div>
+            <div class="safety-level yellow"><span class="level-dot yellow-dot"></span><strong>Needs Attention</strong><p>Recommend contacting a professional</p></div>
+            <div class="safety-level red"><span class="level-dot red-dot"></span><strong>Potential Emergency</strong><p>Emergency guidance + immediate help</p></div>
+          </div>
+        </div>
+
+        <!-- Human-in-the-Loop -->
+        <div class="safety-card reveal" data-delay="200">
+          <h3>👨‍⚕️ Human-in-the-Loop</h3>
+          <p class="safety-desc">The AI never acts as an autonomous medical decision-maker. Every critical recommendation passes through human oversight.</p>
+          <div class="hitl-flow">
+            <div class="hitl-node"><span>🤖</span><p>AI Recommendation</p></div>
+            <div class="hitl-arrow">↓</div>
+            <div class="hitl-node"><span>🔍</span><p>Safety Check</p></div>
+            <div class="hitl-arrow">↓</div>
+            <div class="hitl-node decision"><span>❓</span><p>Review Required?</p></div>
+            <div class="hitl-branch">
+              <div class="hitl-yes"><span class="hitl-label">YES →</span><div class="hitl-node human"><span>👨‍⚕️</span><p>Human Approval</p></div></div>
+              <div class="hitl-no"><span class="hitl-label">NO →</span><div class="hitl-node safe"><span>✅</span><p>Safe Response</p></div></div>
+            </div>
+          </div>
+          <div class="hitl-oversight">
+            <h4>👨‍⚕️ Oversight Dashboard</h4>
+            <div class="oversight-items">
+              <div class="oversight-item"><span>AI Recommendation</span><span class="oversight-badge">Reviewed ✓</span></div>
+              <div class="oversight-item"><span>Safety Check</span><span class="oversight-badge green-badge">Passed</span></div>
+              <div class="oversight-item"><span>Confidence</span><span class="oversight-badge">87%</span></div>
+              <div class="oversight-item"><span>Escalation</span><span class="oversight-badge yellow-badge">Optional</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="safety-disclaimer reveal" data-delay="300">
+        <div class="disclaimer-icon">⚕️</div>
+        <div>
+          <h4>Important Disclaimer</h4>
+          <p>CAREsaathi AI provides AI-assisted health <strong>information</strong>, preventive guidance, care coordination and workflow support. It does <strong>not</strong> diagnose, prescribe, or replace healthcare professionals. All critical actions include clinical escalation pathways.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ AI CARE CENTER (DEMO) ============ -->
+  <section class="section section-dark" id="demo">
+    <div class="container">
+      <div class="section-eyebrow reveal"><span class="eyebrow-line"></span><span class="eyebrow-text">Interactive Demo</span></div>
+      <h2 class="section-heading reveal" data-delay="100">🏥 CARE<br /><span class="gradient-text">Command Center</span></h2>
+
+      <div class="command-center reveal" data-delay="200">
+        <!-- Chat Panel -->
+        <div class="cc-chat-panel">
+          <div class="cc-header">
+            <div class="cc-header-left">
+              <div class="cc-avatar"><span>🤖</span><div class="cc-status-dot"></div></div>
+              <div><h4>CAREsaathi AI</h4><span class="cc-status">Healthcare Agent • Online</span></div>
+            </div>
+            <select class="cc-lang-select" id="cc-lang-select">
+              <option value="en">🇬🇧 English</option><option value="kn">🇮🇳 ಕನ್ನಡ</option><option value="hi">🇮🇳 हिन्दी</option><option value="ta">🇮🇳 தமிழ்</option><option value="te">🇮🇳 తెలుగు</option>
+            </select>
+          </div>
+          <div class="cc-messages" id="cc-messages">
+            <div class="cc-msg ai">
+              <div class="cc-msg-avatar">🤖</div>
+              <div class="cc-msg-content">
+                <p>Namaskara! 🙏 I'm CAREsaathi, your healthcare AI companion. How can I help?</p>
+                <div class="cc-quick-actions">
+                  <button class="cc-quick-btn" data-msg="I have fever, cough and difficulty breathing">🔎 Check Symptoms</button>
+                  <button class="cc-quick-btn" data-msg="Set a medicine reminder for Metformin 500mg at 8 AM daily">💊 Manage Medicines</button>
+                  <button class="cc-quick-btn" data-msg="Find nearest hospital with emergency services">🏥 Find Healthcare</button>
+                  <button class="cc-quick-btn" data-msg="My father has severe chest pain and is having difficulty breathing">🚑 Emergency Help</button>
+                  <button class="cc-quick-btn" data-msg="Explain my blood report - Hemoglobin 12.4 g/dL, WBC 8500">📋 Understand Report</button>
+                  <button class="cc-quick-btn" data-msg="What are the early signs of diabetes I should watch for?">🧠 Health Education</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="cc-input-area">
+            <button class="cc-voice-btn" id="cc-voice-btn" title="Voice Input">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            </button>
+            <input type="text" class="cc-input" id="cc-input" placeholder="Ask CAREsaathi about health, medicines, emergencies..." />
+            <button class="cc-send-btn" id="cc-send-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </div>
+        </div>
+        <!-- Side Panel -->
+        <div class="cc-side-panel">
+          <div class="cc-agent-status">
+            <h4>🤖 Agent Status</h4>
+            <div class="agent-status-list">
+              <div class="agent-status-item"><div class="agent-dot active"></div><span>🩺 CARE Agent</span><span class="agent-state" id="care-state">Ready</span></div>
+              <div class="agent-status-item"><div class="agent-dot active"></div><span>💊 MED Agent</span><span class="agent-state" id="med-state">Ready</span></div>
+              <div class="agent-status-item"><div class="agent-dot active"></div><span>🚑 EMERGENCY Agent</span><span class="agent-state" id="emg-state">Ready</span></div>
+              <div class="agent-status-item"><div class="agent-dot active"></div><span>🌐 Translation</span><span class="agent-state">Active</span></div>
+              <div class="agent-status-item"><div class="agent-dot active"></div><span>🛡️ Safety Engine</span><span class="agent-state">Armed</span></div>
+            </div>
+          </div>
+          <div class="cc-rag-panel">
+            <h4>🧠 Trusted Health Knowledge</h4>
+            <div class="rag-sources" id="rag-sources">
+              <div class="rag-source"><span class="rag-icon">📕</span><div><strong>Clinical Guidance</strong><small>WHO, ICMR, medical references</small></div></div>
+              <div class="rag-source"><span class="rag-icon">💊</span><div><strong>Medication Database</strong><small>Drug info, interactions, dosage</small></div></div>
+              <div class="rag-source"><span class="rag-icon">🏥</span><div><strong>Healthcare Directory</strong><small>Hospitals, clinics, pharmacies</small></div></div>
+              <div class="rag-source"><span class="rag-icon">📋</span><div><strong>Public Health Resources</strong><small>Government health advisories</small></div></div>
+            </div>
+            <div class="rag-note">ℹ️ Information retrieved from trusted medical/public-health sources.</div>
+          </div>
+          <div class="cc-action-panel">
+            <h4>⚡ Agent Actions</h4>
+            <div class="action-log" id="action-log">
+              <div class="action-item"><span class="action-time">--:--</span><span class="action-text">Waiting for user input...</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HEALTHCARE DASHBOARD ============ -->
+  <section class="section" id="dashboard">
+    <div class="container">
+      <div class="section-eyebrow reveal"><span class="eyebrow-line"></span><span class="eyebrow-text">Patient / Family Dashboard</span></div>
+      <h2 class="section-heading reveal" data-delay="100">🏥 CARE<br /><span class="gradient-text">Command Dashboard</span></h2>
+
+      <div class="dashboard-grid reveal" data-delay="200">
+        <div class="dash-card"><div class="dash-icon">💚</div><h4>Health Status</h4><p>General Health</p><span class="dash-badge green-bg">● Monitoring</span></div>
+        <div class="dash-card"><div class="dash-icon">💊</div><h4>Medication</h4><p>Next reminder</p><span class="dash-badge blue-bg">8:00 PM</span></div>
+        <div class="dash-card"><div class="dash-icon">📊</div><h4>Risk Screening</h4><p>Last assessment</p><span class="dash-badge green-bg">Completed ✓</span></div>
+        <div class="dash-card"><div class="dash-icon">🚑</div><h4>Emergency</h4><p>Emergency assistance</p><span class="dash-badge purple-bg">Available</span></div>
+        <div class="dash-card"><div class="dash-icon">📅</div><h4>Appointments</h4><p>Upcoming consultation</p><span class="dash-badge blue-bg">Oct 5, 10 AM</span></div>
+        <div class="dash-card"><div class="dash-icon">📄</div><h4>Health Records</h4><p>Documents available</p><span class="dash-badge">3 Reports</span></div>
+      </div>
+
+      <!-- Report Understanding -->
+      <div class="report-section reveal" data-delay="300">
+        <h3>📄 Medical Report Assistant</h3>
+        <p class="report-desc">Upload a report → OCR → Extract → Explain in simple language → Safety check</p>
+        <div class="report-demo">
+          <div class="report-upload"><div class="upload-icon">📤</div><p>Upload Medical Report</p><small>PDF, JPG, PNG supported</small></div>
+          <div class="report-result">
+            <h4>YOUR REPORT — Blood Test</h4>
+            <div class="report-row"><span class="report-param">Hemoglobin</span><span class="report-val">12.4 g/dL</span><span class="report-range normal">Normal ✓</span></div>
+            <div class="report-row"><span class="report-param">WBC Count</span><span class="report-val">8,500 /µL</span><span class="report-range normal">Normal ✓</span></div>
+            <div class="report-row"><span class="report-param">Blood Sugar (F)</span><span class="report-val">115 mg/dL</span><span class="report-range caution">Borderline ⚠</span></div>
+            <div class="report-explain">💡 <strong>What this means:</strong> Your blood sugar is slightly above the normal range (70-100 mg/dL). This may warrant monitoring.</div>
+            <div class="report-disclaimer">⚕️ This explanation is educational and does not constitute a diagnosis. Please consult your doctor.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Caregiver Mode -->
+      <div class="caregiver-section reveal" data-delay="300">
+        <h3>👨‍👩‍👧 Caregiver Mode</h3>
+        <p class="caregiver-desc">A family member can manage care for their loved ones.</p>
+        <div class="caregiver-grid">
+          <div class="cg-item"><span>💊</span><p>Medication Reminders</p></div>
+          <div class="cg-item"><span>📅</span><p>Appointments</p></div>
+          <div class="cg-item"><span>📞</span><p>Emergency Contacts</p></div>
+          <div class="cg-item"><span>📋</span><p>Care Tasks</p></div>
+          <div class="cg-item"><span>📝</span><p>Health Notes</p></div>
+          <div class="cg-item"><span>🔔</span><p>Follow-up Reminders</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HEALTHCARE ACCESS MAP ============ -->
+  <section class="section section-dark" id="map-section">
+    <div class="container">
+      <div class="section-eyebrow reveal"><span class="eyebrow-line"></span><span class="eyebrow-text">Healthcare Location Intelligence</span></div>
+      <h2 class="section-heading reveal" data-delay="100">🗺️ Healthcare<br /><span class="gradient-text">Access Map</span></h2>
+      <div class="map-legend reveal" data-delay="150">
+        <span class="legend-item"><span class="legend-dot" style="background:#00d4aa"></span>🏥 Hospitals</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#0ea5e9"></span>🩺 Clinics</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#f59e0b"></span>💊 Pharmacies</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#ef4444"></span>🚑 Emergency</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#8b5cf6"></span>🧪 Diagnostics</span>
+      </div>
+      <div class="map-container reveal" data-delay="200" id="hospital-map"></div>
+      <p class="map-note reveal" data-delay="250">📍 DEMO DATA — Facility availability shown is simulated for prototype purposes.</p>
+    </div>
+  </section>
+
+  <!-- ============ ARCHITECTURE ============ -->
+  <section class="section" id="architecture">
+    <div class="container">
+      <div class="section-eyebrow reveal"><span class="eyebrow-line"></span><span class="eyebrow-text">System Design</span></div>
+      <h2 class="section-heading reveal" data-delay="100">End-to-End Agentic<br /><span class="gradient-text">Architecture Pipeline</span></h2>
+
+      <div class="arch-visual reveal" data-delay="200">
+        <div class="arch-layer"><div class="arch-layer-label">👤 User Input</div><div class="arch-layer-nodes"><div class="arch-chip">🎤 Voice (7 Languages)</div><div class="arch-chip">💬 Text Chat</div><div class="arch-chip">📷 Image / Report Upload</div></div></div>
+        <div class="arch-connector"></div>
+        <div class="arch-layer highlight-layer"><div class="arch-layer-label">🧠 CARE Orchestrator (LangGraph)</div><div class="arch-layer-nodes"><div class="arch-chip accent-chip">Intent + Risk Analysis</div><div class="arch-chip accent-chip">Translation Engine</div><div class="arch-chip accent-chip">Agent Router</div></div></div>
+        <div class="arch-connector"></div>
+        <div class="arch-layer"><div class="arch-layer-label">🤖 Domain Agents</div><div class="arch-layer-nodes"><div class="arch-chip care-chip">🩺 CARE Agent</div><div class="arch-chip med-chip">💊 MED Agent</div><div class="arch-chip emg-chip">🚑 EMERGENCY Agent</div></div></div>
+        <div class="arch-connector"></div>
+        <div class="arch-layer"><div class="arch-layer-label">📚 Health RAG Layer</div><div class="arch-layer-nodes"><div class="arch-chip">Medical KB (pgvector)</div><div class="arch-chip">Drug Database</div><div class="arch-chip">Hospital Directory</div><div class="arch-chip">FHIR Resources</div></div></div>
+        <div class="arch-connector"></div>
+        <div class="arch-layer safety-layer"><div class="arch-layer-label">🛡️ Safety Engine + Human Oversight</div><div class="arch-layer-nodes"><div class="arch-chip safe-chip">Risk Classification</div><div class="arch-chip safe-chip">Danger-Sign Detection</div><div class="arch-chip safe-chip">Human-in-the-Loop</div><div class="arch-chip safe-chip">Evidence + Sources</div></div></div>
+        <div class="arch-connector"></div>
+        <div class="arch-layer"><div class="arch-layer-label">🎯 Action + Result</div><div class="arch-layer-nodes"><div class="arch-chip">Explained Response</div><div class="arch-chip">Escalation Path</div><div class="arch-chip">Audit / Logging</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TECH STACK (19 LAYERS) ============ -->
+  <section class="section section-dark" id="tech">
+    <div class="container">
+      <div class="section-eyebrow reveal"><span class="eyebrow-line"></span><span class="eyebrow-text">19-Layer Technology Stack</span></div>
+      <h2 class="section-heading reveal" data-delay="100">Full-Stack<br /><span class="gradient-text">Technology Arsenal</span></h2>
+      <div class="tech-grid">
+        <div class="tech-category reveal" data-delay="50"><h3 class="tech-cat-title">🎨 Frontend</h3><div class="tech-items"><div class="tech-item"><span class="tech-dot" style="--color:#000"></span>Next.js + React</div><div class="tech-item"><span class="tech-dot" style="--color:#3178c6"></span>TypeScript</div><div class="tech-item"><span class="tech-dot" style="--color:#06b6d4"></span>Tailwind CSS</div><div class="tech-item"><span class="tech-dot" style="--color:#ff4154"></span>Framer Motion + GSAP</div></div></div>
+        <div class="tech-category reveal" data-delay="100"><h3 class="tech-cat-title">🧠 AI / ML</h3><div class="tech-items"><div class="tech-item"><span class="tech-dot" style="--color:#3776ab"></span>Python + FastAPI</div><div class="tech-item"><span class="tech-dot" style="--color:#00d4aa"></span>LangGraph / LangChain</div><div class="tech-item"><span class="tech-dot" style="--color:#ee4c2c"></span>PyTorch + scikit-learn</div><div class="tech-item"><span class="tech-dot" style="--color:#ffca28"></span>Hugging Face / LLM APIs</div></div></div>
+        <div class="tech-category reveal" data-delay="150"><h3 class="tech-cat-title">📚 RAG & Knowledge</h3><div class="tech-items"><div class="tech-item"><span class="tech-dot" style="--color:#8b5cf6"></span>pgvector / Qdrant / ChromaDB</div><div class="tech-item"><span class="tech-dot" style="--color:#f59e0b"></span>LlamaIndex</div><div class="tech-item"><span class="tech-dot" style="--color:#22c55e"></span>Sentence Transformers</div></div></div>
+        <div class="tech-category reveal" data-delay="200"><h3 class="tech-cat-title">🗄️ Data & FHIR</h3><div class="tech-items"><div class="tech-item"><span class="tech-dot" style="--color:#336791"></span>PostgreSQL</div><div class="tech-item"><span class="tech-dot" style="--color:#dc382d"></span>Redis</div><div class="tech-item"><span class="tech-dot" style="--color:#f0db4f"></span>Elasticsearch</div><div class="tech-item"><span class="tech-dot" style="--color:#0ea5e9"></span>FHIR (HL7)</div></div></div>
+        <div class="tech-category reveal" data-delay="250"><h3 class="tech-cat-title">🎙️ Voice & i18n</h3><div class="tech-items"><div class="tech-item"><span class="tech-dot" style="--color:#ef4444"></span>Whisper STT</div><div class="tech-item"><span class="tech-dot" style="--color:#22c55e"></span>NLLB / Indic Models</div><div class="tech-item"><span class="tech-dot" style="--color:#f59e0b"></span>Google / Azure TTS</div></div></div>
+        <div class="tech-category reveal" data-delay="300"><h3 class="tech-cat-title">☁️ DevOps & Security</h3><div class="tech-items"><div class="tech-item"><span class="tech-dot" style="--color:#2496ed"></span>Docker + GitHub Actions</div><div class="tech-item"><span class="tech-dot" style="--color:#000"></span>Vercel + AWS/Render</div><div class="tech-item"><span class="tech-dot" style="--color:#8b5cf6"></span>OAuth 2.0 + JWT + MFA</div><div class="tech-item"><span class="tech-dot" style="--color:#00d4aa"></span>RBAC + Audit Logging</div></div></div>
+      </div>
+
+      <!-- Language Bars -->
+      <div class="lang-breakdown reveal" data-delay="200">
+        <h3>🔥 Languages Used</h3>
+        <div class="lang-bars">
+          <div class="lang-bar-item"><div class="lang-bar-header"><span>Python</span><span>45%</span></div><div class="lang-bar-track"><div class="lang-bar-fill python" style="width:45%"></div></div><span class="lang-bar-desc">AI/ML, FastAPI, LangGraph, RAG</span></div>
+          <div class="lang-bar-item"><div class="lang-bar-header"><span>TypeScript</span><span>28%</span></div><div class="lang-bar-track"><div class="lang-bar-fill typescript" style="width:28%"></div></div><span class="lang-bar-desc">Next.js, React, Node.js, WebSockets</span></div>
+          <div class="lang-bar-item"><div class="lang-bar-header"><span>JavaScript</span><span>12%</span></div><div class="lang-bar-track"><div class="lang-bar-fill javascript" style="width:12%"></div></div><span class="lang-bar-desc">Maps, Charts, Voice, Real-time</span></div>
+          <div class="lang-bar-item"><div class="lang-bar-header"><span>SQL</span><span>10%</span></div><div class="lang-bar-track"><div class="lang-bar-fill sql" style="width:10%"></div></div><span class="lang-bar-desc">PostgreSQL, FHIR, Schemas</span></div>
+          <div class="lang-bar-item"><div class="lang-bar-header"><span>HTML/CSS</span><span>5%</span></div><div class="lang-bar-track"><div class="lang-bar-fill htmlcss" style="width:5%"></div></div><span class="lang-bar-desc">Structure, Tailwind, Animations</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ IMPACT ============ -->
+  <section class="section" id="impact">
+    <div class="container">
+      <div class="section-eyebrow reveal"><span class="eyebrow-line"></span><span class="eyebrow-text">Impact & Future</span></div>
+      <h2 class="section-heading reveal" data-delay="100">Building Healthcare<br /><span class="gradient-text">For Billions</span></h2>
+      <div class="impact-grid">
+        <div class="impact-card reveal" data-delay="100"><div class="impact-value">1.4B+</div><div class="impact-label">Indians needing accessible healthcare</div></div>
+        <div class="impact-card reveal" data-delay="150"><div class="impact-value">70%</div><div class="impact-label">Rural population with limited access</div></div>
+        <div class="impact-card reveal" data-delay="200"><div class="impact-value">7+</div><div class="impact-label">Languages supported</div></div>
+        <div class="impact-card reveal" data-delay="250"><div class="impact-value">24/7</div><div class="impact-label">AI-assisted health support</div></div>
+      </div>
+      <div class="future-scope reveal" data-delay="300">
+        <h3>🚀 Future Scope</h3>
+        <div class="future-grid">
+          <div class="future-item"><span>🧬</span><p>Genomic health insights</p></div>
+          <div class="future-item"><span>🩻</span><p>Medical imaging analysis</p></div>
+          <div class="future-item"><span>⌚</span><p>Wearable integration</p></div>
+          <div class="future-item"><span>🤝</span><p>Telemedicine booking</p></div>
+          <div class="future-item"><span>📱</span><p>Offline-first mobile app</p></div>
+          <div class="future-item"><span>🌐</span><p>Pan-India language expansion</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TEAM ============ -->
+  <section class="section section-dark" id="team">
+    <div class="container">
+      <div class="section-eyebrow reveal"><span class="eyebrow-line"></span><span class="eyebrow-text">The Team</span></div>
+      <h2 class="section-heading reveal" data-delay="100">Meet the<br /><span class="gradient-text">Team</span></h2>
+      <div class="team-grid">
+        <div class="team-card reveal" data-delay="100"><div class="team-avatar"><div class="team-avatar-placeholder">P</div></div><h3>Prathwik H Devadiga</h3><p class="team-role">Full Stack Developer & AI Lead</p><p class="team-desc">Architecture, AI orchestration, LangGraph, system engineering.</p></div>
+        <div class="team-card reveal" data-delay="200"><div class="team-avatar"><div class="team-avatar-placeholder">T</div></div><h3>Team Member 2</h3><p class="team-role">Role TBD</p><p class="team-desc">Contribution details to be updated.</p></div>
+        <div class="team-card reveal" data-delay="300"><div class="team-avatar"><div class="team-avatar-placeholder">T</div></div><h3>Team Member 3</h3><p class="team-role">Role TBD</p><p class="team-desc">Contribution details to be updated.</p></div>
+        <div class="team-card reveal" data-delay="400"><div class="team-avatar"><div class="team-avatar-placeholder">T</div></div><h3>Team Member 4</h3><p class="team-role">Role TBD</p><p class="team-desc">Contribution details to be updated.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-bg-pattern"></div>
+    <div class="container"><div class="cta-content reveal">
+      <h2>Ready to Experience Healthcare AI?</h2>
+      <p>Talk → Understand → Assess → Retrieve → Assist → Verify → Escalate → Explain</p>
+      <div class="cta-buttons">
+        <a href="#demo" class="btn-primary btn-large"><span>🤖 Talk to CAREsaathi</span><div class="btn-shimmer"></div></a>
+        <a href="#architecture" class="btn-outline btn-large"><span>📐 View Architecture</span></a>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="nav-logo-text"><span class="logo-care">CARE</span><span class="logo-saathi">saathi</span><span class="logo-ai-badge">AI</span></div>
+          <p>Intelligent Healthcare Assistance for Everyone.</p>
+          <div class="footer-disclaimer">⚕️ CAREsaathi AI does not diagnose or prescribe. Always consult healthcare professionals for medical decisions.</div>
+        </div>
+        <div class="footer-columns">
+          <div class="footer-col"><h4>Healthcare</h4><a href="#agents">CARE Agent</a><a href="#agents">MED Agent</a><a href="#agents">EMERGENCY Agent</a><a href="#demo">AI Care Center</a></div>
+          <div class="footer-col"><h4>Platform</h4><a href="#safety">Safety Engine</a><a href="#dashboard">Dashboard</a><a href="#map-section">Healthcare Map</a><a href="#architecture">Architecture</a></div>
+          <div class="footer-col"><h4>Technical</h4><a href="#tech">Tech Stack</a><a href="#impact">Impact</a><a href="#team">Team</a></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 CAREsaathi AI — Build for Billions Healthcare Hackathon. All data is simulated for demo purposes.</p>
+        <p class="footer-tagline">Built with 💚 for every Indian.</p>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg></button>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

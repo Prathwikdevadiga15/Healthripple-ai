@@ -1,0 +1,21 @@
+medicine_id,name,criticality
+MED-01,Insulin,critical
+MED-02,Amoxicillin,high
+MED-03,Paracetamol,low
+MED-04,ORS,medium
+MED-05,Metformin,high
+MED-06,Amlodipine,medium
+MED-07,Salbutamol Inhaler,high
+MED-08,Oxytocin,critical
+MED-09,Ceftriaxone,critical
+MED-10,Iron-Folic Acid,low
+MED-11,Diazepam,medium
+MED-12,ORS-Zinc Kit,medium
+MED-13,Azithromycin,high
+MED-14,Vitamin A,low
+MED-15,Tetanus Toxoid,medium
+MED-16,Adrenaline,critical
+MED-17,Hydrocortisone,high
+MED-18,Normal Saline (IV),high
+MED-19,Rabies Vaccine,critical
+MED-20,Cough Syrup,low

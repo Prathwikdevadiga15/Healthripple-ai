@@ -1,0 +1,25 @@
+# Node / frontend
+node_modules/
+dist/
+apps/web/dist/
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Vercel
+.vercel/
+
+# OS
+.DS_Store
+
+# Logs
+*.log
